@@ -40,3 +40,53 @@ int main() {
 
     return 0;
 }
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <cmath>
+#include <functional>
+
+int main() {
+    double a, b, eps;
+    std::cout << "Enter a, b, and epsilon: ";
+    std::cin >> a >> b >> eps;
+
+    if (a > b) std::swap(a, b);
+
+    auto f = [](double x) -> double {
+        return std::exp(x) - std::exp(-x) - 2;
+        };
+
+    if (f(a) * f(b) > 0) {
+        std::cout << "No root on the interval." << std::endl;
+        return 1;
+    }
+
+    int iterations = 0;
+    double c;
+
+    while ((b - a) / 2 > eps) {
+        c = (a + b) / 2;
+        if (f(a) * f(c) < 0) {
+            b = c;
+        }
+        else {
+            a = c;
+        }
+        iterations++;
+    }
+
+    double root = (a + b) / 2;
+    std::cout << "Root found: x = " << root << std::endl;
+    std::cout << "Iterations: " << iterations << std::endl;
+
+    return 0;
+}
+
+
